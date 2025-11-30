@@ -12,6 +12,10 @@ export default function Contact() {
         message: "",
     });
 
+    const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [success, setSuccess] = useState<string | null>(null);
+
     const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
     const lastScrollY = useRef(0);
 
@@ -30,12 +34,39 @@ export default function Contact() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    function validate(values: typeof formState) {
+        const errs: typeof errors = {};
+        if (!values.name.trim()) errs.name = "Name is required";
+        if (!values.email.trim()) errs.email = "Email is required";
+        else if (!/^\S+@\S+\.\S+$/.test(values.email)) errs.email = "Enter a valid email";
+        if (!values.message.trim()) errs.message = "Message is required";
+        return errs;
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log(formState);
-        alert("Thanks for reaching out! I'll get back to you soon.");
-        setFormState({ name: "", email: "", message: "" });
+        setSuccess(null);
+        const validation = validate(formState);
+        setErrors(validation);
+        if (Object.keys(validation).length > 0) {
+            // validation failed
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            // Simulate network request — replace with your API call if available
+            await new Promise((res) => setTimeout(res, 900));
+            setSuccess("Thanks! Your message has been sent.");
+            setFormState({ name: "", email: "", message: "" });
+            setErrors({});
+        } catch (err) {
+            setSuccess("Something went wrong. Please try again later.");
+        } finally {
+            setIsSubmitting(false);
+            // clear success after a while
+            window.setTimeout(() => setSuccess(null), 4500);
+        }
     };
 
     const socialLinks = [
@@ -141,6 +172,7 @@ export default function Contact() {
                         <form
                             onSubmit={handleSubmit}
                             className="space-y-6 bg-card p-8 rounded-2xl border border-border shadow-lg"
+                            noValidate
                         >
                             <div>
                                 <label
@@ -152,15 +184,22 @@ export default function Contact() {
                                 <input
                                     type="text"
                                     id="name"
-                                    required
                                     value={formState.name}
                                     onChange={(e) =>
                                         setFormState({ ...formState, name: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 rounded-lg bg-background border border-input focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.name ? 'border-red-500' : 'border-input'}`}
                                     placeholder="John Doe"
+                                    aria-invalid={!!errors.name}
+                                    aria-describedby={errors.name ? 'name-error' : undefined}
                                 />
+                                {errors.name && (
+                                    <p id="name-error" className="mt-2 text-sm text-red-400">
+                                        {errors.name}
+                                    </p>
+                                )}
                             </div>
+
                             <div>
                                 <label
                                     htmlFor="email"
@@ -171,15 +210,22 @@ export default function Contact() {
                                 <input
                                     type="email"
                                     id="email"
-                                    required
                                     value={formState.email}
                                     onChange={(e) =>
                                         setFormState({ ...formState, email: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 rounded-lg bg-background border border-input focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.email ? 'border-red-500' : 'border-input'}`}
                                     placeholder="john@example.com"
+                                    aria-invalid={!!errors.email}
+                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                 />
+                                {errors.email && (
+                                    <p id="email-error" className="mt-2 text-sm text-red-400">
+                                        {errors.email}
+                                    </p>
+                                )}
                             </div>
+
                             <div>
                                 <label
                                     htmlFor="message"
@@ -189,22 +235,55 @@ export default function Contact() {
                                 </label>
                                 <textarea
                                     id="message"
-                                    required
                                     rows={4}
                                     value={formState.message}
                                     onChange={(e) =>
                                         setFormState({ ...formState, message: e.target.value })
                                     }
-                                    className="w-full px-4 py-3 rounded-lg bg-background border border-input focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none"
+                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none ${errors.message ? 'border-red-500' : 'border-input'}`}
                                     placeholder="Tell me about your project..."
+                                    aria-invalid={!!errors.message}
+                                    aria-describedby={errors.message ? 'message-error' : undefined}
                                 />
+                                {errors.message && (
+                                    <p id="message-error" className="mt-2 text-sm text-red-400">
+                                        {errors.message}
+                                    </p>
+                                )}
                             </div>
+
                             <button
                                 type="submit"
-                                className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+                                disabled={isSubmitting}
+                                className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3"
                             >
-                                Send Message
+                                {isSubmitting ? (
+                                    <svg className="animate-spin h-5 w-5 text-primary-foreground" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                    </svg>
+                                ) : (
+                                    'Send Message'
+                                )}
                             </button>
+
+                            <div aria-live="polite" className="mt-2">
+                                {success && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -6 }}
+                                        className="rounded-md bg-green-800/80 text-white px-4 py-2 text-sm"
+                                    >
+                                        {success}
+                                    </motion.div>
+                                )}
+                                {(!success && Object.keys(errors).length > 0) && (
+                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-md bg-red-900/80 text-white px-4 py-2 text-sm">
+                                        Please fix the errors above and try again.
+                                    </motion.div>
+                                )}
+                            </div>
                         </form>
                     </motion.div>
                 </div>

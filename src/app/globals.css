@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
+
 :root {
   /* Premium Dark Theme Palette */
   --background: #0a0a0a;
   --foreground: #ededed;
-  
   /* Accent Colors - Vibrant Purple/Blue Gradient feel */
   --primary: #8b5cf6; /* Violet 500 */
   --primary-foreground: #ffffff;
-  
   --secondary: #1f1f1f;
   --secondary-foreground: #a1a1aa;
-  
   --accent: #3b82f6; /* Blue 500 */
   --accent-foreground: #ffffff;
-  
   --card: #171717;
   --card-foreground: #ededed;
-  
   --border: #262626;
   --input: #262626;
   --ring: #8b5cf6;
+}
+
+/* Light Theme Variables */
+.light {
+  --background: #f8fafc;
+  --foreground: #22223b;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #e0e7ef;
+  --secondary-foreground: #22223b;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #22223b;
+  --border: #cbd5e1;
+  --input: #cbd5e1;
+  --ring: #7c3aed;
+}
+
+/* Animated gradient background */
+.animate-gradient-move {
+  background-size: 200% 200%;
+  animation: gradientMove 8s ease-in-out infinite;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated gradient text */
+.animate-gradient-text {
+  background-size: 200% 200%;
+  animation: gradientTextMove 4s ease-in-out infinite;
+}
+@keyframes gradientTextMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Slow spin for icons */
+.animate-spin-slow {
+  animation: spin 2.5s linear infinite;
+}
+
+/* Bounce for icons */
+.animate-bounce {
+  animation: bounce 1.2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Parallax helper - JS-managed transforms */
+.parallax {
+  will-change: transform;
+  transform: translateY(0);
+  transition: transform 0.2s linear;
+}
+
+/* Tilt/3D card helpers */
+.tilt-wrapper {
+  perspective: 1000px;
+}
+.tilt-inner {
+  transform-style: preserve-3d;
+  transition: transform 350ms cubic-bezier(.2,.9,.2,1);
 }
 
 @theme inline {

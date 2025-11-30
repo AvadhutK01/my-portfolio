@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
+import { useCallback } from "react";
+import useParallax from "@/hooks/useParallax";
 
 const projects = [
     {
@@ -51,6 +53,8 @@ export default function Projects() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useParallax();
+
     return (
         <section id="projects" className="py-20 md:py-32">
             <div className="container mx-auto px-4">
@@ -78,7 +82,7 @@ export default function Projects() {
                             transition={scrollDirection === 'down' ? { duration: 0.5, delay: index * 0.1 } : { duration: 0 }}
                             className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-shadow"
                         >
-                            <div className="relative h-48 w-full overflow-hidden">
+                            <div className="relative h-48 w-full overflow-hidden parallax" data-speed="0.06">
                                 <Image
                                     src={project.image}
                                     alt={project.title}
@@ -114,4 +118,5 @@ export default function Projects() {
             </div>
         </section>
     );
+                            // enable parallax indicated decorations
 }

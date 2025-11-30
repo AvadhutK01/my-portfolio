@@ -2,10 +2,16 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const { theme, setTheme } = useTheme();
+    const [active, setActive] = useState<string>("home");
+    const manualScrollRef = useRef(false);
+    const manualTimeoutRef = useRef<number | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,15 +21,41 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        const ids = ["about", "experience", "achievements", "projects", "contact"];
+        const observers: IntersectionObserver[] = [];
+
+            ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const obs = new IntersectionObserver(
+                (entries) => {
+                    // If user initiated a manual click-scroll, skip observer updates briefly
+                    if (manualScrollRef.current) return;
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            setActive(id);
+                        }
+                    });
+                },
+                { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+            );
+            obs.observe(el);
+            observers.push(obs);
+        });
+
+        return () => observers.forEach((o) => o.disconnect());
+    }, []);
+
     return (
         <motion.header
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? "bg-background/95 backdrop-blur-lg py-4"
-                    : "bg-background/0 py-6"
-                }`}
+                ? "bg-background/95 backdrop-blur-lg py-4"
+                : "bg-background/0 py-6"
+            }`}
         >
             <div className="container mx-auto flex items-center justify-between px-4">
                 <Link href="/" className="flex items-center gap-3 group">
@@ -37,38 +69,54 @@ export default function Navbar() {
                         Avadhut<span className="text-primary">.</span>
                     </span>
                 </Link>
+                {/* Theme Toggle Button */}
+                {/* <button
+                    aria-label="Toggle dark/light mode"
+                    className="ml-4 rounded-full p-2 bg-card border border-border hover:bg-primary/20 transition-colors"
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                >
+                    {theme === "dark" ? (
+                        <FaSun className="text-yellow-400" />
+                    ) : (
+                        <FaMoon className="text-blue-600" />
+                    )}
+                </button> */}
 
-                <nav className="hidden md:flex items-center gap-8">
-                    <Link
-                        href="#about"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        About
-                    </Link>
-                    <Link
-                        href="#experience"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        Experience
-                    </Link>
-                    <Link
-                        href="#achievements"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        Achievements
-                    </Link>
-                    <Link
-                        href="#projects"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        Projects
-                    </Link>
-                    <Link
-                        href="#contact"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        Contact
-                    </Link>
+                <nav className="hidden md:flex items-center gap-8 relative">
+                    {[
+                        { id: "about", label: "About" },
+                        { id: "experience", label: "Experience" },
+                        { id: "achievements", label: "Achievements" },
+                        { id: "projects", label: "Projects" },
+                        { id: "contact", label: "Contact" },
+                    ].map((link) => (
+                        <div key={link.id} className="relative">
+                            <Link
+                                href={`#${link.id}`}
+                                className={`text-sm font-medium transition-colors ${active === link.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                                onClick={() => {
+                                    // mark manual scroll to prevent observer override during smooth scrolling
+                                    setActive(link.id);
+                                    manualScrollRef.current = true;
+                                    if (manualTimeoutRef.current) window.clearTimeout(manualTimeoutRef.current);
+                                    // allow observers to resume after 900ms
+                                    manualTimeoutRef.current = window.setTimeout(() => {
+                                        manualScrollRef.current = false;
+                                        manualTimeoutRef.current = null;
+                                    }, 900) as unknown as number;
+                                }}
+                            >
+                                {link.label}
+                            </Link>
+                            {active === link.id && (
+                                <motion.span
+                                    layoutId="nav-underline"
+                                    className="absolute -bottom-3 left-0 right-0 h-0.5 bg-primary rounded"
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                />
+                            )}
+                        </div>
+                    ))}
                 </nav>
 
                 <Link

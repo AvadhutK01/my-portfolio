@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import useParallax from "@/hooks/useParallax";
 
 const experiences = [
     {
@@ -49,6 +50,8 @@ export default function Experience() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useParallax();
+
     return (
         <section id="experience" className="py-20 md:py-32">
             <div className="container mx-auto px-4">
@@ -78,7 +81,7 @@ export default function Experience() {
                             className="relative pl-8 border-l-2 border-border last:border-0 pb-8 last:pb-0"
                         >
                             <div className="absolute top-0 left-[-9px] h-4 w-4 rounded-full bg-primary" />
-                            <div className="bg-card p-6 rounded-xl border border-border hover:border-primary/50 transition-colors">
+                            <div className="bg-card p-6 rounded-xl border border-border hover:border-primary/50 transition-colors parallax" data-speed="0.04">
                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                                     <h3 className="text-xl font-semibold">{exp.title}</h3>
                                     <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full w-fit mt-2 sm:mt-0">

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import useParallax from "@/hooks/useParallax";
 
 const skills = [
     "React",
@@ -33,6 +34,9 @@ export default function About() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // enable parallax effect for decorated elements
+    useParallax();
+
     return (
         <section id="about" className="py-20 md:py-32 bg-secondary/30">
             <div className="container mx-auto px-4">
@@ -61,16 +65,18 @@ export default function About() {
                         transition={scrollDirection === 'down' ? { duration: 0.8, delay: 0.2 } : { duration: 0 }}
                         className="space-y-6"
                     >
-                        <h3 className="text-2xl font-semibold">My Journey</h3>
-                        <p className="text-muted-foreground">
-                            Starting with a curiosity for how things work on the web, I dove deep
-                            into frontend development. Over the years, I've honed my skills in
-                            building responsive, accessible, and performant web apps.
-                        </p>
-                        <p className="text-muted-foreground">
-                            When I'm not coding, you can find me exploring new design trends,
-                            contributing to open source, or enjoying a good cup of coffee.
-                        </p>
+                        <div className="parallax" data-speed="0.12">
+                            <h3 className="text-2xl font-semibold">My Journey</h3>
+                            <p className="text-muted-foreground">
+                                Starting with a curiosity for how things work on the web, I dove deep
+                                into frontend development. Over the years, I've honed my skills in
+                                building responsive, accessible, and performant web apps.
+                            </p>
+                            <p className="text-muted-foreground">
+                                When I'm not coding, you can find me exploring new design trends,
+                                contributing to open source, or enjoying a good cup of coffee.
+                            </p>
+                        </div>
                     </motion.div>
 
                     <motion.div
@@ -81,18 +87,20 @@ export default function About() {
                     >
                         <h3 className="text-2xl font-semibold mb-6">Skills & Technologies</h3>
                         <div className="flex flex-wrap gap-3">
-                            {skills.map((skill, index) => (
-                                <motion.span
-                                    key={skill}
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    transition={scrollDirection === 'down' ? { duration: 0.4, delay: 0.1 * index } : { duration: 0 }}
-                                    className="px-4 py-2 rounded-full bg-card border border-border text-sm font-medium hover:border-primary transition-colors cursor-default"
-                                >
-                                    {skill}
-                                </motion.span>
-                            ))}
+                            <div className="parallax" data-speed="0.08">
+                                {skills.map((skill, index) => (
+                                    <motion.span
+                                        key={skill}
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.3 }}
+                                        transition={scrollDirection === 'down' ? { duration: 0.4, delay: 0.1 * index } : { duration: 0 }}
+                                        className="px-4 py-2 rounded-full bg-card border border-border text-sm font-medium hover:border-primary transition-colors cursor-default mr-2 mb-2 inline-block"
+                                    >
+                                        {skill}
+                                    </motion.span>
+                                ))}
+                            </div>
                         </div>
                     </motion.div>
                 </div>
