@@ -11,34 +11,36 @@ export default function Hero() {
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d") as CanvasRenderingContext2D | null;
         if (!ctx) return;
+        const cw = canvas.width;
+        const ch = canvas.height;
         let particles: {x: number, y: number, r: number, dx: number, dy: number}[] = [];
         for (let i = 0; i < 40; i++) {
             particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+                x: Math.random() * cw,
+                y: Math.random() * ch,
                 r: Math.random() * 2 + 1,
                 dx: (Math.random() - 0.5) * 0.7,
                 dy: (Math.random() - 0.5) * 0.7
             });
         }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function animate(context: CanvasRenderingContext2D) {
+            context.clearRect(0, 0, cw, ch);
             for (let p of particles) {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = "#7f5af0";
-                ctx.globalAlpha = 0.7;
-                ctx.fill();
+                context.beginPath();
+                context.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                context.fillStyle = "#7f5af0";
+                context.globalAlpha = 0.7;
+                context.fill();
                 p.x += p.dx;
                 p.y += p.dy;
-                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                if (p.x < 0 || p.x > cw) p.dx *= -1;
+                if (p.y < 0 || p.y > ch) p.dy *= -1;
             }
-            requestAnimationFrame(animate);
+            requestAnimationFrame(() => animate(context));
         }
-        animate();
+        animate(ctx);
     }, []);
 
     return (
