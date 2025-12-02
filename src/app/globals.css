@@ -6,11 +6,13 @@
   --background: #0a0a0a;
   --foreground: #ededed;
   /* Accent Colors - Vibrant Purple/Blue Gradient feel */
-  --primary: #8b5cf6; /* Violet 500 */
+  --primary: #8b5cf6;
+  /* Violet 500 */
   --primary-foreground: #ffffff;
   --secondary: #1f1f1f;
   --secondary-foreground: #a1a1aa;
-  --accent: #3b82f6; /* Blue 500 */
+  --accent: #3b82f6;
+  /* Blue 500 */
   --accent-foreground: #ffffff;
   --card: #171717;
   --card-foreground: #ededed;
@@ -41,10 +43,19 @@
   background-size: 200% 200%;
   animation: gradientMove 8s ease-in-out infinite;
 }
+
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Animated gradient text */
@@ -52,10 +63,19 @@
   background-size: 200% 200%;
   animation: gradientTextMove 4s ease-in-out infinite;
 }
+
 @keyframes gradientTextMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Slow spin for icons */
@@ -67,9 +87,17 @@
 .animate-bounce {
   animation: bounce 1.2s infinite;
 }
+
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 /* Parallax helper - JS-managed transforms */
@@ -83,9 +111,10 @@
 .tilt-wrapper {
   perspective: 1000px;
 }
+
 .tilt-inner {
   transform-style: preserve-3d;
-  transition: transform 350ms cubic-bezier(.2,.9,.2,1);
+  transition: transform 350ms cubic-bezier(.2, .9, .2, 1);
 }
 
 @theme inline {
@@ -102,7 +131,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -113,7 +142,8 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; /* Prevent horizontal scroll from animations */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll from animations */
 }
 
 /* Custom Scrollbar */
@@ -132,4 +162,9 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--secondary-foreground);
+}
+
+/* Custom Cursor */
+* {
+  cursor: none !important;
 }

@@ -191,13 +191,7 @@ export default function Contact() {
                                     className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.name ? 'border-red-500' : 'border-input'}`}
                                     placeholder="John Doe"
                                     aria-invalid={!!errors.name}
-                                    aria-describedby={errors.name ? 'name-error' : undefined}
                                 />
-                                {errors.name && (
-                                    <p id="name-error" className="mt-2 text-sm text-red-400">
-                                        {errors.name}
-                                    </p>
-                                )}
                             </div>
 
                             <div>
@@ -217,13 +211,7 @@ export default function Contact() {
                                     className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.email ? 'border-red-500' : 'border-input'}`}
                                     placeholder="john@example.com"
                                     aria-invalid={!!errors.email}
-                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                 />
-                                {errors.email && (
-                                    <p id="email-error" className="mt-2 text-sm text-red-400">
-                                        {errors.email}
-                                    </p>
-                                )}
                             </div>
 
                             <div>
@@ -243,13 +231,7 @@ export default function Contact() {
                                     className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none ${errors.message ? 'border-red-500' : 'border-input'}`}
                                     placeholder="Tell me about your project..."
                                     aria-invalid={!!errors.message}
-                                    aria-describedby={errors.message ? 'message-error' : undefined}
                                 />
-                                {errors.message && (
-                                    <p id="message-error" className="mt-2 text-sm text-red-400">
-                                        {errors.message}
-                                    </p>
-                                )}
                             </div>
 
                             <button
@@ -276,11 +258,6 @@ export default function Contact() {
                                         className="rounded-md bg-green-800/80 text-white px-4 py-2 text-sm"
                                     >
                                         {success}
-                                    </motion.div>
-                                )}
-                                {(!success && Object.keys(errors).length > 0) && (
-                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-md bg-red-900/80 text-white px-4 py-2 text-sm">
-                                        Please fix the errors above and try again.
                                     </motion.div>
                                 )}
                             </div>
