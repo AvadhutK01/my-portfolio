@@ -15,7 +15,7 @@ export default function Hero() {
         if (!ctx) return;
         const cw = canvas.width;
         const ch = canvas.height;
-        let particles: {x: number, y: number, r: number, dx: number, dy: number}[] = [];
+        let particles: { x: number, y: number, r: number, dx: number, dy: number }[] = [];
         for (let i = 0; i < 40; i++) {
             particles.push({
                 x: Math.random() * cw,
@@ -96,15 +96,17 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
+                onClick={() => {
+                    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                }}
             >
-                <div className="h-10 w-6 rounded-full border-2 border-muted-foreground p-1 flex items-center justify-center">
+                <div className="h-10 w-6 rounded-full border-2 border-muted-foreground p-1 flex items-start justify-center">
                     <motion.div
                         animate={{ y: [0, 12, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                        className="h-2 w-full rounded-full bg-muted-foreground"
+                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                        className="h-2 w-2 rounded-full bg-muted-foreground"
                     />
-                    <FaStar className="text-primary ml-2 animate-bounce" />
                 </div>
             </motion.div>
         </section>

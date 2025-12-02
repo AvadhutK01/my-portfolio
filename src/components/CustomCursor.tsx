@@ -7,10 +7,14 @@ export default function CustomCursor() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
     const [isInViewport, setIsInViewport] = useState(true);
+    const [hasMouseMoved, setHasMouseMoved] = useState(false);
 
     useEffect(() => {
         const updateMousePosition = (e: MouseEvent) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
+            if (!hasMouseMoved) {
+                setHasMouseMoved(true);
+            }
         };
 
         const handleMouseOver = (e: MouseEvent) => {
@@ -47,18 +51,18 @@ export default function CustomCursor() {
             document.removeEventListener("mouseenter", handleMouseEnter);
             document.removeEventListener("mouseleave", handleMouseLeave);
         };
-    }, []);
+    }, [hasMouseMoved]);
 
     return (
         <>
             {/* Main Dot */}
             <motion.div
-                className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference opacity-0"
                 animate={{
                     x: mousePosition.x - 6,
                     y: mousePosition.y - 6,
                     scale: isHovering ? 0 : 1,
-                    opacity: isInViewport ? 1 : 0,
+                    opacity: hasMouseMoved && isInViewport ? 1 : 0,
                 }}
                 transition={{
                     type: "spring",
@@ -70,13 +74,13 @@ export default function CustomCursor() {
 
             {/* Trailing Ring */}
             <motion.div
-                className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[9998] mix-blend-difference"
+                className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[9998] mix-blend-difference opacity-0"
                 animate={{
                     x: mousePosition.x - 16,
                     y: mousePosition.y - 16,
                     scale: isHovering ? 1.5 : 1,
                     backgroundColor: isHovering ? "var(--primary)" : "transparent",
-                    opacity: isInViewport ? (isHovering ? 0.2 : 1) : 0,
+                    opacity: hasMouseMoved && isInViewport ? (isHovering ? 0.2 : 1) : 0,
                 }}
                 transition={{
                     type: "spring",
