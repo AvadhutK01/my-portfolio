@@ -13,34 +13,93 @@ export default function Hero() {
         if (!canvas) return;
         const ctx = canvas.getContext("2d") as CanvasRenderingContext2D | null;
         if (!ctx) return;
-        const cw = canvas.width;
-        const ch = canvas.height;
+
+        let animationFrameId: number;
         let particles: { x: number, y: number, r: number, dx: number, dy: number }[] = [];
-        for (let i = 0; i < 40; i++) {
-            particles.push({
-                x: Math.random() * cw,
-                y: Math.random() * ch,
-                r: Math.random() * 2 + 1,
-                dx: (Math.random() - 0.5) * 0.7,
-                dy: (Math.random() - 0.5) * 0.7
-            });
-        }
-        function animate(context: CanvasRenderingContext2D) {
-            context.clearRect(0, 0, cw, ch);
+        let mouse = { x: -1000, y: -1000 };
+
+        const handleMouseMove = (event: MouseEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+        };
+
+        const handleMouseLeave = () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        };
+
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        };
+
+        const initParticles = () => {
+            particles = [];
+            const particleCount = Math.floor((canvas.width * canvas.height) / 15000); // Responsive count
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2 + 1,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5
+                });
+            }
+        };
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', handleMouseLeave);
+
+        function animate() {
+            if (!ctx || !canvas) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             for (let p of particles) {
-                context.beginPath();
-                context.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                context.fillStyle = "#7f5af0";
-                context.globalAlpha = 0.7;
-                context.fill();
+                // Mouse Interaction
+                const dx = mouse.x - p.x;
+                const dy = mouse.y - p.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxDistance = 100;
+
+                if (distance < maxDistance) {
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const force = (maxDistance - distance) / maxDistance;
+                    const directionX = forceDirectionX * force * 5;
+                    const directionY = forceDirectionY * force * 5;
+
+                    p.x -= directionX;
+                    p.y -= directionY;
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = "#7f5af0";
+                ctx.globalAlpha = 0.5;
+                ctx.fill();
+
                 p.x += p.dx;
                 p.y += p.dy;
-                if (p.x < 0 || p.x > cw) p.dx *= -1;
-                if (p.y < 0 || p.y > ch) p.dy *= -1;
+
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
             }
-            requestAnimationFrame(() => animate(context));
+            animationFrameId = requestAnimationFrame(animate);
         }
-        animate(ctx);
+
+        animate();
+
+        return () => {
+            window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseleave', handleMouseLeave);
+            cancelAnimationFrame(animationFrameId);
+        };
     }, []);
 
     return (
@@ -55,7 +114,11 @@ export default function Hero() {
                 <div className="w-full h-full bg-gradient-to-br from-primary/30 via-accent/20 to-background/10 animate-gradient-move" />
             </motion.div>
             {/* Particle Canvas */}
-            <canvas ref={canvasRef} width={500} height={500} className="absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2" style={{ pointerEvents: 'none' }} />
+            <canvas
+                ref={canvasRef}
+                className="absolute inset-0 -z-10"
+                style={{ pointerEvents: 'none' }}
+            />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
