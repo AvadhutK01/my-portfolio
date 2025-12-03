@@ -8,8 +8,24 @@ export default function CustomCursor() {
     const [isHovering, setIsHovering] = useState(false);
     const [isInViewport, setIsInViewport] = useState(true);
     const [hasMouseMoved, setHasMouseMoved] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        // Check if device has coarse pointer (touch)
+        const checkMobile = () => {
+            const isTouch = window.matchMedia("(pointer: coarse)").matches;
+            setIsMobile(isTouch);
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
+
         const updateMousePosition = (e: MouseEvent) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
             if (!hasMouseMoved) {
@@ -51,7 +67,9 @@ export default function CustomCursor() {
             document.removeEventListener("mouseenter", handleMouseEnter);
             document.removeEventListener("mouseleave", handleMouseLeave);
         };
-    }, [hasMouseMoved]);
+    }, [hasMouseMoved, isMobile]);
+
+    if (isMobile) return null;
 
     return (
         <>
