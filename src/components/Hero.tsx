@@ -164,14 +164,15 @@ export default function Hero() {
                     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 }}
             >
-                <div className="h-10 w-6 rounded-full border-2 border-muted-foreground p-1 flex items-start justify-center">
+                <div className="h-10 w-6 rounded-full border-2 border-primary p-1 flex items-start justify-center">
                     <motion.div
                         animate={{ y: [0, 12, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                        className="h-2 w-2 rounded-full bg-muted-foreground"
+                        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                        className="h-2 w-2 rounded-full bg-primary"
                     />
                 </div>
             </motion.div>
         </section>
     );
 }
+
