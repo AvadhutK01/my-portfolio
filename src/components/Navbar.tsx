@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -12,6 +13,7 @@ export default function Navbar() {
     const [active, setActive] = useState<string>("home");
     const manualScrollRef = useRef(false);
     const manualTimeoutRef = useRef<number | null>(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -47,6 +49,25 @@ export default function Navbar() {
         return () => observers.forEach((o) => o.disconnect());
     }, []);
 
+    const navLinks = [
+        { id: "about", label: "About" },
+        { id: "experience", label: "Experience" },
+        { id: "achievements", label: "Achievements" },
+        { id: "projects", label: "Projects" },
+        { id: "contact", label: "Contact" },
+    ];
+
+    const handleLinkClick = (id: string) => {
+        setActive(id);
+        manualScrollRef.current = true;
+        if (manualTimeoutRef.current) window.clearTimeout(manualTimeoutRef.current);
+        manualTimeoutRef.current = window.setTimeout(() => {
+            manualScrollRef.current = false;
+            manualTimeoutRef.current = null;
+        }, 900) as unknown as number;
+        setIsMenuOpen(false); // Close menu on link click
+    };
+
     return (
         <motion.header
             initial={{ y: -100 }}
@@ -69,42 +90,14 @@ export default function Navbar() {
                         Avadhut<span className="text-primary">.</span>
                     </span>
                 </Link>
-                {/* Theme Toggle Button */}
-                {/* <button
-                    aria-label="Toggle dark/light mode"
-                    className="ml-4 rounded-full p-2 bg-card border border-border hover:bg-primary/20 transition-colors"
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                >
-                    {theme === "dark" ? (
-                        <FaSun className="text-yellow-400" />
-                    ) : (
-                        <FaMoon className="text-blue-600" />
-                    )}
-                </button> */}
 
                 <nav className="hidden md:flex items-center gap-8 relative">
-                    {[
-                        { id: "about", label: "About" },
-                        { id: "experience", label: "Experience" },
-                        { id: "achievements", label: "Achievements" },
-                        { id: "projects", label: "Projects" },
-                        { id: "contact", label: "Contact" },
-                    ].map((link) => (
+                    {navLinks.map((link) => (
                         <div key={link.id} className="relative">
                             <Link
                                 href={`#${link.id}`}
                                 className={`text-sm font-medium transition-colors ${active === link.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                                onClick={() => {
-                                    // mark manual scroll to prevent observer override during smooth scrolling
-                                    setActive(link.id);
-                                    manualScrollRef.current = true;
-                                    if (manualTimeoutRef.current) window.clearTimeout(manualTimeoutRef.current);
-                                    // allow observers to resume after 900ms
-                                    manualTimeoutRef.current = window.setTimeout(() => {
-                                        manualScrollRef.current = false;
-                                        manualTimeoutRef.current = null;
-                                    }, 900) as unknown as number;
-                                }}
+                                onClick={() => handleLinkClick(link.id)}
                             >
                                 {link.label}
                             </Link>
@@ -125,7 +118,43 @@ export default function Navbar() {
                 >
                     Let's Talk
                 </Link>
+
+                <div className="md:hidden">
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-foreground">
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
+
+            {isMenuOpen && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="md:hidden mt-4 bg-background/95 backdrop-blur-lg"
+                >
+                    <nav className="flex flex-col items-center gap-6 py-8">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.id}
+                                href={`#${link.id}`}
+                                className={`text-lg font-medium transition-colors ${active === link.id ? "text-primary" : "text-muted-foreground hover:text-primary"}`}
+                                onClick={() => handleLinkClick(link.id)}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                        <Link
+                            href="#contact"
+                            className="rounded-full bg-primary px-6 py-3 text-lg font-medium text-primary-foreground transition-transform hover:scale-105"
+                             onClick={() => handleLinkClick('contact')}
+                        >
+                            Let's Talk
+                        </Link>
+                    </nav>
+                </motion.div>
+            )}
         </motion.header>
     );
 }
+

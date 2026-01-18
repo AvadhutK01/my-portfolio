@@ -97,174 +97,173 @@ export default function Contact() {
     ];
 
     return (
-        <section id="contact" className="py-20 md:py-32 bg-secondary/30">
-            <div className="container mx-auto px-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.3 }}
-                    transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
-                    className="max-w-3xl mx-auto text-center mb-16"
-                >
-                    <h2 className="text-3xl font-bold mb-6 sm:text-4xl">Get In Touch</h2>
-                    <p className="text-lg text-muted-foreground">
-                        Have a project in mind or just want to say hi? I'd love to hear from
-                        you.
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, amount: 0.3 }}
-                        transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
-                        className="space-y-8"
-                    >
-                        <div className="bg-card p-8 rounded-2xl border border-border shadow-lg h-full flex flex-col justify-center">
-                            <h3 className="text-2xl font-semibold mb-6">Connect with me</h3>
-                            <p className="text-muted-foreground mb-8">
-                                Feel free to reach out through any of these platforms. I'm always
-                                open to discussing new projects, creative ideas or opportunities to
-                                be part of your visions.
-                            </p>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                {socialLinks.map((link, index) => (
-                                    <Link
-                                        key={index}
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`flex items-center gap-3 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all duration-300 group ${link.color}`}
-                                    >
-                                        <div className="p-2 rounded-full bg-background group-hover:scale-110 transition-transform">
-                                            {link.icon}
-                                        </div>
-                                        <span className="font-medium">{link.name}</span>
-                                    </Link>
-                                ))}
-                            </div>
-
-                            <div className="mt-8 pt-8 border-t border-border flex items-center gap-3">
-                                <div className="p-3 rounded-full bg-primary/10 text-primary">
-                                    <Mail className="h-6 w-6" />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-muted-foreground">Email me at</p>
-                                    <a
-                                        href="mailto:hello@example.com"
-                                        className="text-lg font-medium hover:text-primary transition-colors"
-                                    >
-                                        hello@example.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, amount: 0.3 }}
-                        transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
-                    >
-                        <form
-                            onSubmit={handleSubmit}
-                            className="space-y-6 bg-card p-8 rounded-2xl border border-border shadow-lg"
-                            noValidate
+        <section id="contact" className="py-20 md:py-28 lg:py-32 bg-secondary/30">
+                    <div className="container mx-auto px-4">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
+                            className="max-w-3xl mx-auto text-center mb-16 md:mb-20"
                         >
-                            <div>
-                                <label
-                                    htmlFor="name"
-                                    className="block text-sm font-medium mb-2 text-foreground"
-                                >
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    value={formState.name}
-                                    onChange={(e) =>
-                                        setFormState({ ...formState, name: e.target.value })
-                                    }
-                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.name ? 'border-red-500' : 'border-input'}`}
-                                    placeholder="John Doe"
-                                    aria-invalid={!!errors.name}
-                                />
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="block text-sm font-medium mb-2 text-foreground"
-                                >
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    value={formState.email}
-                                    onChange={(e) =>
-                                        setFormState({ ...formState, email: e.target.value })
-                                    }
-                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors ${errors.email ? 'border-red-500' : 'border-input'}`}
-                                    placeholder="john@example.com"
-                                    aria-invalid={!!errors.email}
-                                />
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor="message"
-                                    className="block text-sm font-medium mb-2 text-foreground"
-                                >
-                                    Message
-                                </label>
-                                <textarea
-                                    id="message"
-                                    rows={4}
-                                    value={formState.message}
-                                    onChange={(e) =>
-                                        setFormState({ ...formState, message: e.target.value })
-                                    }
-                                    className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none ${errors.message ? 'border-red-500' : 'border-input'}`}
-                                    placeholder="Tell me about your project..."
-                                    aria-invalid={!!errors.message}
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3"
+                            <h2 className="text-3xl font-bold mb-6 sm:text-4xl lg:text-5xl">Get In Touch</h2>
+                            <p className="text-lg text-muted-foreground lg:text-xl">
+                                Have a project in mind or just want to say hi? I'd love to hear from
+                                you.
+                            </p>
+                        </motion.div>
+        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.3 }}
+                                transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
+                                className="space-y-8"
                             >
-                                {isSubmitting ? (
-                                    <svg className="animate-spin h-5 w-5 text-primary-foreground" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                                    </svg>
-                                ) : (
-                                    'Send Message'
-                                )}
-                            </button>
-
-                            <div aria-live="polite" className="mt-2">
-                                {success && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -6 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -6 }}
-                                        className="rounded-md bg-green-800/80 text-white px-4 py-2 text-sm"
+                                <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-lg h-full flex flex-col justify-center">
+                                    <h3 className="text-2xl lg:text-3xl font-semibold mb-6">Connect with me</h3>
+                                    <p className="text-muted-foreground mb-8 lg:text-lg">
+                                        Feel free to reach out through any of these platforms. I'm always
+                                        open to discussing new projects, creative ideas or opportunities to
+                                        be part of your visions.
+                                    </p>
+        
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        {socialLinks.map((link, index) => (
+                                            <Link
+                                                key={index}
+                                                href={link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`flex items-center gap-3 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all duration-300 group ${link.color}`}
+                                            >
+                                                <div className="p-2 rounded-full bg-background group-hover:scale-110 transition-transform">
+                                                    {link.icon}
+                                                </div>
+                                                <span className="font-medium lg:text-lg">{link.name}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+        
+                                    <div className="mt-8 pt-8 border-t border-border flex items-center gap-3">
+                                        <div className="p-3 rounded-full bg-primary/10 text-primary">
+                                            <Mail className="h-6 w-6 lg:h-7 lg:w-7" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground lg:text-base">Email me at</p>
+                                            <a
+                                                href="mailto:hello@example.com"
+                                                className="text-lg font-medium hover:text-primary transition-colors lg:text-xl"
+                                            >
+                                                hello@example.com
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+        
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false, amount: 0.3 }}
+                                transition={scrollDirection === 'down' ? { duration: 0.8 } : { duration: 0 }}
+                            >
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="space-y-6 bg-card p-6 md:p-8 rounded-2xl border border-border shadow-lg"
+                                    noValidate
+                                >
+                                    <div>
+                                        <label
+                                            htmlFor="name"
+                                            className="block text-sm font-medium mb-2 text-foreground lg:text-base"
+                                        >
+                                            Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            value={formState.name}
+                                            onChange={(e) =>
+                                                setFormState({ ...formState, name: e.target.value })
+                                            }
+                                            className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors lg:py-4 ${errors.name ? 'border-red-500' : 'border-input'}`}
+                                            placeholder="John Doe"
+                                            aria-invalid={!!errors.name}
+                                        />
+                                    </div>
+        
+                                    <div>
+                                        <label
+                                            htmlFor="email"
+                                            className="block text-sm font-medium mb-2 text-foreground lg:text-base"
+                                        >
+                                            Email
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            value={formState.email}
+                                            onChange={(e) =>
+                                                setFormState({ ...formState, email: e.target.value })
+                                            }
+                                            className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors lg:py-4 ${errors.email ? 'border-red-500' : 'border-input'}`}
+                                            placeholder="john@example.com"
+                                            aria-invalid={!!errors.email}
+                                        />
+                                    </div>
+        
+                                    <div>
+                                        <label
+                                            htmlFor="message"
+                                            className="block text-sm font-medium mb-2 text-foreground lg:text-base"
+                                        >
+                                            Message
+                                        </label>
+                                        <textarea
+                                            id="message"
+                                            rows={4}
+                                            value={formState.message}
+                                            onChange={(e) =>
+                                                setFormState({ ...formState, message: e.target.value })
+                                            }
+                                            className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none lg:py-4 ${errors.message ? 'border-red-500' : 'border-input'}`}
+                                            placeholder="Tell me about your project..."
+                                            aria-invalid={!!errors.message}
+                                        />
+                                    </div>
+        
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3 lg:py-5 lg:text-lg"
                                     >
-                                        {success}
-                                    </motion.div>
-                                )}
-                            </div>
-                        </form>
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
+                                        {isSubmitting ? (
+                                            <svg className="animate-spin h-5 w-5 text-primary-foreground" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                            </svg>
+                                        ) : (
+                                            'Send Message'
+                                        )}
+                                    </button>
+        
+                                    <div aria-live="polite" className="mt-2">
+                                        {success && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -6 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -6 }}
+                                                className="rounded-md bg-green-800/80 text-white px-4 py-2 text-sm lg:text-base"
+                                            >
+                                                {success}
+                                            </motion.div>
+                                        )}
+                                    </div>
+                                </form>
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>    );
 }
