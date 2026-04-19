@@ -9,38 +9,39 @@ import {
     FaGitAlt,
     FaAws,
     FaDocker,
+    FaHtml5,
+    FaCss3Alt,
+    FaBootstrap,
+    FaJs
 } from "react-icons/fa";
 import {
     TbBrandNextjs,
     TbBrandTypescript,
-    TbBrandTailwind,
-    TbBrandFramerMotion,
-    TbBrandReactNative,
 } from "react-icons/tb";
-import { FaPencilRuler } from "react-icons/fa";
-import { DiMongodb, DiMysql, DiPostgresql } from "react-icons/di";
-import { SiExpress, SiExpo, SiKubernetes, SiDjango } from "react-icons/si";
-
+import { DiMongodb, DiMysql, DiPostgresql, DiRedis } from "react-icons/di";
+import { SiExpress, SiRedux, SiJest, SiSocketdotio, SiNginx } from "react-icons/si";
 
 const skills = [
-    { name: "React", icon: <FaReact /> },
+    { name: "JavaScript", icon: <FaJs /> },
+    { name: "TypeScript", icon: <TbBrandTypescript /> },
+    { name: "React.js", icon: <FaReact /> },
     { name: "Next.js", icon: <TbBrandNextjs /> },
     { name: "Node.js", icon: <FaNodeJs /> },
-    { name: "Express", icon: <SiExpress /> },
-    { name: "Django", icon: <SiDjango /> },
-    { name: "TypeScript", icon: <TbBrandTypescript /> },
+    { name: "Express.js", icon: <SiExpress /> },
+    { name: "Redux", icon: <SiRedux /> },
+    { name: "HTML5", icon: <FaHtml5 /> },
+    { name: "CSS3", icon: <FaCss3Alt /> },
+    { name: "Bootstrap", icon: <FaBootstrap /> },
     { name: "MongoDB", icon: <DiMongodb /> },
     { name: "MySQL", icon: <DiMysql /> },
     { name: "PostgreSQL", icon: <DiPostgresql /> },
-    { name: "React Native", icon: <TbBrandReactNative /> },
-    { name: "Expo", icon: <SiExpo /> },
+    { name: "Redis", icon: <DiRedis /> },
     { name: "AWS", icon: <FaAws /> },
     { name: "Docker", icon: <FaDocker /> },
-    { name: "Kubernetes", icon: <SiKubernetes /> },
-    { name: "Tailwind CSS", icon: <TbBrandTailwind /> },
-    { name: "Framer Motion", icon: <TbBrandFramerMotion /> },
-    { name: "UI/UX Design", icon: <FaPencilRuler /> },
+    { name: "Nginx", icon: <SiNginx /> },
     { name: "Git", icon: <FaGitAlt /> },
+    { name: "Jest", icon: <SiJest /> },
+    { name: "Socket.IO", icon: <SiSocketdotio /> },
 ];
 
 export default function About() {

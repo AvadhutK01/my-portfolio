@@ -21,8 +21,8 @@ const achievements = [
     {
         title: "Employee of the Month",
         organization: "Mypcot Infotech",
-        date: "Jun 2024, Sept 2024, Mar 2025, Sept 2025",
-        description: "Consistently recognized for dedication, high-quality code, and team collaboration.",
+        date: "Jun 2024, Sept 2024, Mar 2025, Sept 2025, Mar 2026",
+        description: "Recognized as Employee of the Month 5 times at Mypcot Infotech for consistent high performance and on-time delivery.",
         icon: "⭐",
     },
 ];

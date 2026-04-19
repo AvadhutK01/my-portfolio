@@ -97,7 +97,7 @@ export default function CustomCursor() {
                     x: mousePosition.x - 16,
                     y: mousePosition.y - 16,
                     scale: isHovering ? 1.5 : 1,
-                    backgroundColor: isHovering ? "var(--primary)" : "transparent",
+                    backgroundColor: isHovering ? "var(--primary)" : "rgba(0, 0, 0, 0)",
                     opacity: hasMouseMoved && isInViewport ? (isHovering ? 0.2 : 1) : 0,
                 }}
                 transition={{

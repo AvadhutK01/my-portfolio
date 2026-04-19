@@ -141,16 +141,17 @@ export default function Hero() {
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
                     <Link
                         href="#projects"
-                        className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-105 shadow-lg hover:shadow-primary/40 sm:text-base sm:px-10 sm:py-4"
+                        className="flex h-14 w-48 items-center justify-center rounded-full bg-primary border border-transparent text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 sm:text-base box-border"
                     >
                         View Work
                     </Link>
-                    <Link
-                        href="#contact"
-                        className="rounded-full border border-border bg-background px-8 py-3 text-sm font-medium transition-colors hover:bg-secondary shadow-lg hover:shadow-accent/40 sm:text-base sm:px-10 sm:py-4"
+                    <a
+                        href="/Avadhut_Kelaskar_Resume.pdf"
+                        download
+                        className="flex h-14 w-48 items-center justify-center rounded-full bg-background border border-border text-sm font-medium text-foreground shadow-lg transition-all hover:bg-secondary hover:scale-105 sm:text-base box-border"
                     >
-                        Contact Me
-                    </Link>
+                        Resume
+                    </a>
                 </div>
             </motion.div>
 
@@ -159,7 +160,7 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
+                className="absolute bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 cursor-pointer"
                 onClick={() => {
                     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 }}

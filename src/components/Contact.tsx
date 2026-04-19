@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Github, Linkedin, Code2, Instagram, Mail } from "lucide-react";
+import { Github, Linkedin, Code2, Instagram, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 
 export default function Contact() {
@@ -55,13 +55,25 @@ export default function Contact() {
 
         setIsSubmitting(true);
         try {
-            // Simulate network request — replace with your API call if available
-            await new Promise((res) => setTimeout(res, 900));
-            setSuccess("Thanks! Your message has been sent.");
-            setFormState({ name: "", email: "", message: "" });
-            setErrors({});
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formState),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setSuccess("Thanks! Your message has been sent.");
+                setFormState({ name: "", email: "", message: "" });
+                setErrors({});
+            } else {
+                setSuccess(data.message || "Something went wrong. Please try again.");
+            }
         } catch (err) {
-            setSuccess("Something went wrong. Please try again later.");
+            setSuccess("Something went wrong. Please check your connection and try again.");
         } finally {
             setIsSubmitting(false);
             // clear success after a while
@@ -73,26 +85,14 @@ export default function Contact() {
         {
             name: "GitHub",
             icon: <Github className="h-6 w-6" />,
-            href: "https://github.com/", // Replace with actual URL
+            href: "https://github.com/AvadhutK01",
             color: "hover:text-[#333]",
         },
         {
             name: "LinkedIn",
             icon: <Linkedin className="h-6 w-6" />,
-            href: "https://linkedin.com/", // Replace with actual URL
+            href: "https://linkedin.com/in/avadhut-kelaskar-ab985524a",
             color: "hover:text-[#0077b5]",
-        },
-        {
-            name: "LeetCode",
-            icon: <Code2 className="h-6 w-6" />,
-            href: "https://leetcode.com/", // Replace with actual URL
-            color: "hover:text-[#ffa116]",
-        },
-        {
-            name: "Instagram",
-            icon: <Instagram className="h-6 w-6" />,
-            href: "https://instagram.com/", // Replace with actual URL
-            color: "hover:text-[#e4405f]",
         },
     ];
 
@@ -108,8 +108,7 @@ export default function Contact() {
                         >
                             <h2 className="text-3xl font-bold mb-6 sm:text-4xl lg:text-5xl">Get In Touch</h2>
                             <p className="text-lg text-muted-foreground lg:text-xl">
-                                Have a project in mind or just want to say hi? I'd love to hear from
-                                you.
+                                Looking for a dedicated software engineer? I am open to full-time roles and would love to hear from you.
                             </p>
                         </motion.div>
         
@@ -124,9 +123,7 @@ export default function Contact() {
                                 <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-lg h-full flex flex-col justify-center">
                                     <h3 className="text-2xl lg:text-3xl font-semibold mb-6">Connect with me</h3>
                                     <p className="text-muted-foreground mb-8 lg:text-lg">
-                                        Feel free to reach out through any of these platforms. I'm always
-                                        open to discussing new projects, creative ideas or opportunities to
-                                        be part of your visions.
+                                        Feel free to reach out through any of these platforms. Let's connect to discuss how I can contribute to your engineering team and help build impactful products.
                                     </p>
         
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -146,18 +143,34 @@ export default function Contact() {
                                         ))}
                                     </div>
         
-                                    <div className="mt-8 pt-8 border-t border-border flex items-center gap-3">
-                                        <div className="p-3 rounded-full bg-primary/10 text-primary">
-                                            <Mail className="h-6 w-6 lg:h-7 lg:w-7" />
+                                    <div className="mt-8 pt-8 border-t border-border flex flex-col gap-6">
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-3 rounded-full bg-primary/10 text-primary">
+                                                <Mail className="h-6 w-6 lg:h-7 lg:w-7" />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-muted-foreground lg:text-base">Email me at</p>
+                                                <a
+                                                    href="mailto:kelaskaravadhut052@gmail.com"
+                                                    className="text-lg font-medium hover:text-primary transition-colors lg:text-xl break-all"
+                                                >
+                                                    kelaskaravadhut052@gmail.com
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p className="text-sm text-muted-foreground lg:text-base">Email me at</p>
-                                            <a
-                                                href="mailto:hello@example.com"
-                                                className="text-lg font-medium hover:text-primary transition-colors lg:text-xl"
-                                            >
-                                                hello@example.com
-                                            </a>
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-3 rounded-full bg-primary/10 text-primary">
+                                                <Phone className="h-6 w-6 lg:h-7 lg:w-7" />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-muted-foreground lg:text-base">Call me at</p>
+                                                <a
+                                                    href="tel:+918623810916"
+                                                    className="text-lg font-medium hover:text-primary transition-colors lg:text-xl"
+                                                >
+                                                    +91 8623810916
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +242,7 @@ export default function Contact() {
                                                 setFormState({ ...formState, message: e.target.value })
                                             }
                                             className={`w-full px-4 py-3 rounded-lg bg-background border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none lg:py-4 ${errors.message ? 'border-red-500' : 'border-input'}`}
-                                            placeholder="Tell me about your project..."
+                                            placeholder="Enter message"
                                             aria-invalid={!!errors.message}
                                         />
                                     </div>
