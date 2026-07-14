@@ -19,7 +19,7 @@ import {
     TbBrandNextjs,
 } from "react-icons/tb";
 import { DiMongodb, DiMysql, DiPostgresql, DiRedis } from "react-icons/di";
-import { SiExpress, SiSocketdotio, SiDjango, SiJsonwebtokens, SiRazorpay, SiGithubactions } from "react-icons/si";
+import { SiExpress, SiSocketdotio, SiDjango, SiJsonwebtokens, SiRazorpay, SiGithubactions, SiJest } from "react-icons/si";
 import { MdOutlineWorkOutline, MdOutlinePersonOutline } from "react-icons/md";
 import { BiBriefcaseAlt2 } from "react-icons/bi";
 
@@ -44,7 +44,7 @@ const projects: Project[] = [
             "Integrated Zoop Aadhaar eSign API for real-time KYC checks across different license types.",
             "Created the database ERD and designed MongoDB schemas supporting pincode-based search and enquiry routing.",
             "Developed the frontend admin panels and landing pages in React.js and Next.js, and set up role-based access control.",
-            "Set up CI/CD workflows, handled API versioning for backward compatibility, and integrated SonarQube for code quality checks."
+            "Set up CI/CD workflows, wrote unit test cases in Jest, handled API versioning for backward compatibility, and integrated SonarQube for code quality checks."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -55,6 +55,7 @@ const projects: Project[] = [
             { name: "AWS", icon: <FaAws /> },
             { name: "CI/CD", icon: <SiGithubactions /> },
             { name: "Zoop", icon: <FaCheckCircle /> },
+            { name: "Jest", icon: <SiJest /> },
         ],
         link: "#",
     },
@@ -66,6 +67,7 @@ const projects: Project[] = [
         details: [
             "Designed the database ERD and built backend REST APIs using Repository Architecture for contests and user workflows.",
             "Integrated Razorpay for secure payments and Zoop for identity verification.",
+            "Wrote unit test cases using Jest to verify transaction logs and contest entry logic.",
             "Implemented Redis caching to reduce database load and improve response times under peak traffic.",
             "Secured financial transactions and sensitive user data using AES-256 encryption.",
             "Containerized the application using Docker and automated deployments using GitHub Actions.",
@@ -81,6 +83,7 @@ const projects: Project[] = [
             { name: "CI/CD", icon: <SiGithubactions /> },
             { name: "Zoop", icon: <FaCheckCircle /> },
             { name: "Razorpay", icon: <SiRazorpay /> },
+            { name: "Jest", icon: <SiJest /> },
         ],
         link: "#",
     },
@@ -92,6 +95,7 @@ const projects: Project[] = [
         details: [
             "Created REST APIs for payment transfers, utility bills, and healthcare allowances using a repository pattern.",
             "Designed the database ERD, mapped schemas using Sequelize ORM, and built three frontend panels in React.js and TypeScript.",
+            "Wrote backend unit test cases in Jest to validate benefit disbursements and transactions.",
             "Integrated the Fawry payment gateway to handle transactions between customers and merchants.",
             "Built a usage-based offer management system with free and premium tiered plans."
         ],
@@ -103,6 +107,7 @@ const projects: Project[] = [
             { name: "AWS", icon: <FaAws /> },
             { name: "CI/CD", icon: <SiGithubactions /> },
             { name: "Fawry", icon: <FaCreditCard /> },
+            { name: "Jest", icon: <SiJest /> },
         ],
         link: "#",
     },
@@ -114,6 +119,7 @@ const projects: Project[] = [
         details: [
             "Designed the database ERD and set up MongoDB schemas for devices and user profiles.",
             "Built a serverless backend using AWS Lambda and API Gateway, writing CloudFormation templates for infrastructure and CI/CD.",
+            "Wrote unit test cases using Jest to verify serverless helper functions and API endpoints.",
             "Improved load speeds by setting up Redis caching, lazy loading, and CloudFront CDN.",
             "Added security layers including JWT authentication, rate limiting, request validation, and SonarQube quality gates."
         ],
@@ -124,6 +130,7 @@ const projects: Project[] = [
             { name: "Redis", icon: <DiRedis /> },
             { name: "MongoDB", icon: <DiMongodb /> },
             { name: "CI/CD", icon: <SiGithubactions /> },
+            { name: "Jest", icon: <SiJest /> },
         ],
         link: "#",
     },
