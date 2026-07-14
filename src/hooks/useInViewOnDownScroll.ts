@@ -20,12 +20,10 @@ export function useInViewOnDownScroll(options: UseInViewOnDownScrollOptions = {}
                 const currentScrollY = window.scrollY;
                 const isScrollingDown = currentScrollY > lastScrollY.current;
 
-                // Only trigger animation when scrolling down and element is in view
                 if (entry.isIntersecting && isScrollingDown && !hasAnimated) {
                     setIsInView(true);
                     setHasAnimated(true);
                 } else if (!entry.isIntersecting && isScrollingDown) {
-                    // Reset when scrolling down past the element
                     setHasAnimated(false);
                     setIsInView(false);
                 }

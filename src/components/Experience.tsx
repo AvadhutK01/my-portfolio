@@ -22,7 +22,7 @@ const experiences = [
         type: "education",
     },
     {
-        title: "Graduation",
+        title: "Graduation (BSc IT)",
         company: "Mumbai University",
         period: "Completed",
         description:

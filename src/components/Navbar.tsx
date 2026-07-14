@@ -3,13 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
-import { FaMoon, FaSun } from "react-icons/fa";
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
-    const { theme, setTheme } = useTheme();
     const [active, setActive] = useState<string>("home");
     const manualScrollRef = useRef(false);
     const manualTimeoutRef = useRef<number | null>(null);
@@ -32,7 +29,6 @@ export default function Navbar() {
             if (!el) return;
             const obs = new IntersectionObserver(
                 (entries) => {
-                    // If user initiated a manual click-scroll, skip observer updates briefly
                     if (manualScrollRef.current) return;
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
@@ -65,7 +61,7 @@ export default function Navbar() {
             manualScrollRef.current = false;
             manualTimeoutRef.current = null;
         }, 900) as unknown as number;
-        setIsMenuOpen(false); // Close menu on link click
+        setIsMenuOpen(false);
     };
 
     return (
@@ -116,7 +112,7 @@ export default function Navbar() {
                     href="#contact"
                     className="hidden md:inline-flex rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-transform hover:scale-105"
                 >
-                    Let's Talk
+                    Let&apos;s Talk
                 </Link>
 
                 <div className="md:hidden">
@@ -149,7 +145,7 @@ export default function Navbar() {
                             className="rounded-full bg-primary px-6 py-3 text-lg font-medium text-primary-foreground transition-transform hover:scale-105"
                              onClick={() => handleLinkClick('contact')}
                         >
-                            Let's Talk
+                            Let&apos;s Talk
                         </Link>
                     </nav>
                 </motion.div>

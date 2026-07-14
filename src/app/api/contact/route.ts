@@ -29,8 +29,7 @@ Message: ${message}
     });
 
     return NextResponse.json({ message: "Email sent successfully" }, { status: 200 });
-  } catch (error) {
-    console.error("Error sending email:", error);
+  } catch {
     return NextResponse.json({ message: "Error sending email. Please check server logs and configuration." }, { status: 500 });
   }
 }

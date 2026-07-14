@@ -12,12 +12,10 @@ export default function useParallax() {
     function onScroll() {
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        const scrollY = window.scrollY || window.pageYOffset;
         const viewportHeight = window.innerHeight;
         elements.forEach((el) => {
           const rect = el.getBoundingClientRect();
           const speed = parseFloat(el.dataset.speed || "0.15");
-          // Compute amount based on element position in viewport
           const offsetFromCenter = rect.top + rect.height / 2 - viewportHeight / 2;
           const translateY = -offsetFromCenter * speed;
           el.style.transform = `translateY(${translateY}px)`;

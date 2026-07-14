@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Github, Linkedin, Code2, Instagram, Mail, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import Link from "next/link";
+import axios from "axios";
 
 export default function Contact() {
     const [formState, setFormState] = useState({
@@ -49,34 +50,24 @@ export default function Contact() {
         const validation = validate(formState);
         setErrors(validation);
         if (Object.keys(validation).length > 0) {
-            // validation failed
             return;
         }
 
         setIsSubmitting(true);
         try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formState),
-            });
+            await axios.post("/api/contact", formState);
 
-            const data = await res.json();
-
-            if (res.ok) {
-                setSuccess("Thanks! Your message has been sent.");
-                setFormState({ name: "", email: "", message: "" });
-                setErrors({});
-            } else {
-                setSuccess(data.message || "Something went wrong. Please try again.");
-            }
+            setSuccess("Thanks! Your message has been sent.");
+            setFormState({ name: "", email: "", message: "" });
+            setErrors({});
         } catch (err) {
-            setSuccess("Something went wrong. Please check your connection and try again.");
+            if (axios.isAxiosError(err)) {
+                setSuccess(err.response?.data?.message || "Something went wrong. Please check your connection and try again.");
+            } else {
+                setSuccess("Something went wrong. Please check your connection and try again.");
+            }
         } finally {
             setIsSubmitting(false);
-            // clear success after a while
             window.setTimeout(() => setSuccess(null), 4500);
         }
     };
@@ -123,7 +114,7 @@ export default function Contact() {
                                 <div className="bg-card p-6 md:p-8 rounded-2xl border border-border shadow-lg h-full flex flex-col justify-center">
                                     <h3 className="text-2xl lg:text-3xl font-semibold mb-6">Connect with me</h3>
                                     <p className="text-muted-foreground mb-8 lg:text-lg">
-                                        Feel free to reach out through any of these platforms. Let's connect to discuss how I can contribute to your engineering team and help build impactful products.
+                                        Feel free to reach out through any of these platforms. Let&apos;s connect to discuss how I can contribute to your engineering team and help build impactful products.
                                     </p>
         
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

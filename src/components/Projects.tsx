@@ -11,28 +11,40 @@ import {
     FaDocker,
     FaHtml5,
     FaServer,
-    FaTimes
+    FaTimes,
+    FaCreditCard,
+    FaCheckCircle
 } from "react-icons/fa";
 import {
     TbBrandNextjs,
 } from "react-icons/tb";
 import { DiMongodb, DiMysql, DiPostgresql, DiRedis } from "react-icons/di";
-import { SiExpress, SiSocketdotio, SiDjango, SiJsonwebtokens } from "react-icons/si";
+import { SiExpress, SiSocketdotio, SiDjango, SiJsonwebtokens, SiRazorpay, SiGithubactions } from "react-icons/si";
 import { MdOutlineWorkOutline, MdOutlinePersonOutline } from "react-icons/md";
 import { BiBriefcaseAlt2 } from "react-icons/bi";
 
-const projects = [
+interface Project {
+    title: string;
+    category: string;
+    categoryIcon: React.ReactNode;
+    description: string;
+    details: string[];
+    tags: { name: string; icon: React.ReactNode }[];
+    link: string;
+}
+
+const projects: Project[] = [
     {
         title: "Alchomap",
         category: "Mypcot Infotech",
         categoryIcon: <MdOutlineWorkOutline className="inline mr-1" />,
         description: "B2B Alcohol Distribution Platform with RESTful APIs, real-time KYC, and efficient lead routing.",
         details: [
-            "Architected RESTful APIs for user onboarding, enquiry management, and distributor-retailer workflows covering city-based supply chain mapping.",
-            "Wired real-time KYC verification via Zoop Aadhaar eSign API with support for multiple license-type verification workflows.",
-            "Structured MongoDB schemas with pincode-based search and intelligent enquiry routing for efficient lead distribution across regions.",
-            "Enforced RBAC across distributor, retailer, and admin roles; shipped SEO-optimized landing pages via Next.js server-side rendering.",
-            "Launched CI/CD automation, API versioning for backward compatibility, and unit tests backed by SonarQube static analysis."
+            "Built REST APIs for user onboarding, enquiry management, and city-based supply chain mapping.",
+            "Integrated Zoop Aadhaar eSign API for real-time KYC checks across different license types.",
+            "Created the database ERD and designed MongoDB schemas supporting pincode-based search and enquiry routing.",
+            "Developed the frontend admin panels and landing pages in React.js and Next.js, and set up role-based access control.",
+            "Set up CI/CD workflows, handled API versioning for backward compatibility, and integrated SonarQube for code quality checks."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -40,6 +52,9 @@ const projects = [
             { name: "React.js", icon: <FaReact /> },
             { name: "Next.js", icon: <TbBrandNextjs /> },
             { name: "MongoDB", icon: <DiMongodb /> },
+            { name: "AWS", icon: <FaAws /> },
+            { name: "CI/CD", icon: <SiGithubactions /> },
+            { name: "Zoop", icon: <FaCheckCircle /> },
         ],
         link: "#",
     },
@@ -49,11 +64,12 @@ const projects = [
         categoryIcon: <MdOutlineWorkOutline className="inline mr-1" />,
         description: "Fantasy Sports Platform with Redis caching, AES-256 encryption, and Docker containerization.",
         details: [
-            "Spearheaded backend API development (Repository Architecture) for contest management, user workflows, and financial transaction processing.",
-            "Boosted API throughput by applying Redis caching strategies that substantially reduced database load under peak-traffic conditions.",
-            "Safeguarded sensitive financial data with AES-256 encryption aligned to PCI DSS compliance requirements.",
-            "Containerized all services with Docker; streamlined deployment cycles through GitHub Actions CI/CD pipelines.",
-            "Performed load testing with JMeter, resolved performance bottlenecks, and monitored production health on AWS EC2 via CloudWatch."
+            "Designed the database ERD and built backend REST APIs using Repository Architecture for contests and user workflows.",
+            "Integrated Razorpay for secure payments and Zoop for identity verification.",
+            "Implemented Redis caching to reduce database load and improve response times under peak traffic.",
+            "Secured financial transactions and sensitive user data using AES-256 encryption.",
+            "Containerized the application using Docker and automated deployments using GitHub Actions.",
+            "Conducted load testing with JMeter to resolve performance bottlenecks, and set up AWS CloudWatch monitoring."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -61,7 +77,10 @@ const projects = [
             { name: "MongoDB", icon: <DiMongodb /> },
             { name: "Redis", icon: <DiRedis /> },
             { name: "Docker", icon: <FaDocker /> },
-            { name: "AWS EC2", icon: <FaAws /> },
+            { name: "AWS", icon: <FaAws /> },
+            { name: "CI/CD", icon: <SiGithubactions /> },
+            { name: "Zoop", icon: <FaCheckCircle /> },
+            { name: "Razorpay", icon: <SiRazorpay /> },
         ],
         link: "#",
     },
@@ -71,17 +90,19 @@ const projects = [
         categoryIcon: <MdOutlineWorkOutline className="inline mr-1" />,
         description: "Islamic Banking Benefits Platform (BNPL) with payment transfer, Fawry integration, and offer management.",
         details: [
-            "Built RESTful APIs for payment transfers, utility payments, and healthcare allowances using a clean repository-pattern architecture.",
-            "Modelled schema via Sequelize ORM and shipped three web panels (admin, service provider, company) in React.js TypeScript.",
-            "Wired Fawry payment gateway for customer and merchant transactions; rolled out SEO-optimized Next.js pages with server-side rendering.",
-            "Launched a usage-based offer management system supporting tiered free and premium profile-level offerings."
+            "Created REST APIs for payment transfers, utility bills, and healthcare allowances using a repository pattern.",
+            "Designed the database ERD, mapped schemas using Sequelize ORM, and built three frontend panels in React.js and TypeScript.",
+            "Integrated the Fawry payment gateway to handle transactions between customers and merchants.",
+            "Built a usage-based offer management system with free and premium tiered plans."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
             { name: "Express.js", icon: <SiExpress /> },
             { name: "React.js", icon: <FaReact /> },
-            { name: "Next.js", icon: <TbBrandNextjs /> },
             { name: "PostgreSQL", icon: <DiPostgresql /> },
+            { name: "AWS", icon: <FaAws /> },
+            { name: "CI/CD", icon: <SiGithubactions /> },
+            { name: "Fawry", icon: <FaCreditCard /> },
         ],
         link: "#",
     },
@@ -91,15 +112,18 @@ const projects = [
         categoryIcon: <MdOutlineWorkOutline className="inline mr-1" />,
         description: "Home Security SaaS Platform using serverless backend processing and robust caching strategies.",
         details: [
-            "Leveraged AWS Lambda and API Gateway to power serverless backend processing; provisioned infrastructure via CloudFormation with full CI/CD.",
-            "Tuned performance using Redis caching, lazy loading, and CDN integration; tracked production health continuously via AWS CloudWatch.",
-            "Fortified the platform with JWT auth, RBAC, encryption, rate limiting, input validation, and XSS/CSRF protection; audited via SonarQube."
+            "Designed the database ERD and set up MongoDB schemas for devices and user profiles.",
+            "Built a serverless backend using AWS Lambda and API Gateway, writing CloudFormation templates for infrastructure and CI/CD.",
+            "Improved load speeds by setting up Redis caching, lazy loading, and CloudFront CDN.",
+            "Added security layers including JWT authentication, rate limiting, request validation, and SonarQube quality gates."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
             { name: "AWS Lambda", icon: <FaAws /> },
+            { name: "AWS", icon: <FaAws /> },
             { name: "Redis", icon: <DiRedis /> },
             { name: "MongoDB", icon: <DiMongodb /> },
+            { name: "CI/CD", icon: <SiGithubactions /> },
         ],
         link: "#",
     },
@@ -109,9 +133,9 @@ const projects = [
         categoryIcon: <MdOutlineWorkOutline className="inline mr-1" />,
         description: "Cloud Storage & Chat Platform featuring a pixel-perfect React.js administrative panel.",
         details: [
-            "Crafted a pixel-perfect, fully responsive marketing landing page in React.js to showcase platform capabilities and drive user acquisition.",
-            "Delivered a full-featured admin panel with modular, reusable React.js components for overseeing users, storage quotas, and chat activity.",
-            "Wired backend REST APIs throughout the admin panel, enabling live data dashboards, user management, and platform health monitoring."
+            "Built a responsive marketing landing page in React.js to showcase the platform features.",
+            "Created a custom admin dashboard with modular React.js components to monitor users and chat logs.",
+            "Connected REST APIs to populate real-time dashboards and handle user management actions."
         ],
         tags: [
             { name: "React.js", icon: <FaReact /> },
@@ -125,8 +149,8 @@ const projects = [
         categoryIcon: <BiBriefcaseAlt2 className="inline mr-1" />,
         description: "Online Vegetable Retail Platform featuring complex product catalogs, cart management, and order processing workflows.",
         details: [
-            "Spun up REST APIs for product catalog, cart management, and order processing for a live green vegetables retail platform.",
-            "Modelled and tuned PostgreSQL schemas for inventory, orders, and users, ensuring efficient query execution under concurrent load."
+            "Developed backend REST APIs for product catalogs, cart management, and checkout flows.",
+            "Designed the database ERD and created optimized PostgreSQL tables for inventory and order tracking."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -141,8 +165,8 @@ const projects = [
         categoryIcon: <BiBriefcaseAlt2 className="inline mr-1" />,
         description: "Internal ERP System covering procurement, inventory, and reporting workflows with robust validation.",
         details: [
-            "Delivered REST APIs using Django for an internal ERP system covering procurement, inventory, and reporting workflows.",
-            "Structured relational data models in PostgreSQL and enforced rigorous validation and business logic to guarantee data integrity."
+            "Built backend REST APIs using Django for procurement, inventory control, and report generation.",
+            "Designed the database ERD and set up PostgreSQL tables with custom validation constraints for data integrity."
         ],
         tags: [
             { name: "Django", icon: <SiDjango /> },
@@ -156,7 +180,9 @@ const projects = [
         categoryIcon: <MdOutlinePersonOutline className="inline mr-1" />,
         description: "End-to-end messaging platform supporting real-time one-to-one and group chat with Socket.IO.",
         details: [
-            "End-to-end messaging platform supporting real-time one-to-one and group chat, file sharing, media transfer, and emoji reactions via Socket.IO."
+            "Designed the database ERD and MySQL schemas for chat history, user relationships, and group memberships.",
+            "Built the frontend UI and landing pages using React.js for an interactive user experience.",
+            "Integrated Socket.IO to support real-time messaging, active status indicators, and file sharing."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -172,15 +198,18 @@ const projects = [
         title: "Expense Tracker",
         category: "Personal Project",
         categoryIcon: <MdOutlinePersonOutline className="inline mr-1" />,
-        description: "Financial tracking tool with income/expense reports and pie charts wired securely with RazorPay.",
+        description: "Financial tracking tool with income/expense reports, pie charts, and secure payment gateway integration.",
         details: [
-            "Financial tracking tool with income/expense reports and pie charts; wired RazorPay for secure premium membership transactions."
+            "Designed the database ERD and wrote MySQL schemas to track incomes, expenses, and monthly budgets.",
+            "Integrated Razorpay for handling secure premium membership subscriptions.",
+            "Created responsive dashboards and visual expense charts using HTML, CSS, and JavaScript."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
             { name: "Express.js", icon: <SiExpress /> },
             { name: "MySQL", icon: <DiMysql /> },
             { name: "HTML/CSS", icon: <FaHtml5 /> },
+            { name: "Razorpay", icon: <SiRazorpay /> },
         ],
         link: "#",
     },
@@ -190,7 +219,9 @@ const projects = [
         categoryIcon: <MdOutlinePersonOutline className="inline mr-1" />,
         description: "MERN utility that extracts ZIP archives, maps file locations into structured PDFs, and stores output securely on AWS S3.",
         details: [
-            "MERN utility that extracts ZIP archives, maps file locations into structured PDFs, and stores output securely on AWS S3."
+            "Designed the database ERD and created MongoDB schemas to map file uploads and metadata.",
+            "Built the frontend user dashboard and file upload interfaces using React.js.",
+            "Developed backend scripts to unzip files, generate structured PDF documents, and store them on AWS S3."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
@@ -205,15 +236,18 @@ const projects = [
         title: "E-Commerce Platform",
         category: "Personal Project",
         categoryIcon: <MdOutlinePersonOutline className="inline mr-1" />,
-        description: "Full MERN e-commerce solution with product catalog, cart management, and payment processing.",
+        description: "Full MERN e-commerce solution with product catalog, cart management, and payment gateway integration.",
         details: [
-            "Full MERN e-commerce solution with product catalog, cart management, and RazorPay payment processing."
+            "Designed the database ERD and set up MongoDB collections for user profiles, catalogs, and shopping carts.",
+            "Built responsive frontend landing pages, dynamic product listings, and cart flows in React.js.",
+            "Integrated Razorpay to handle payments and process customer orders securely."
         ],
         tags: [
             { name: "Node.js", icon: <FaNodeJs /> },
             { name: "Express.js", icon: <SiExpress /> },
             { name: "React.js", icon: <FaReact /> },
             { name: "MongoDB", icon: <DiMongodb /> },
+            { name: "Razorpay", icon: <SiRazorpay /> },
         ],
         link: "#",
     }
@@ -222,7 +256,7 @@ const projects = [
 export default function Projects() {
     const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
     const lastScrollY = useRef(0);
-    const [selectedProject, setSelectedProject] = useState<any>(null);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -264,8 +298,8 @@ export default function Projects() {
                 >
                     <h2 className="text-3xl font-bold mb-4 sm:text-4xl lg:text-5xl">Featured Work</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto lg:text-lg">
-                        Here are some of the projects I've worked on. Each one represents a
-                        unique challenge and a solution I'm proud of.
+                        Here are some of the projects I&apos;ve worked on. Each one represents a
+                        unique challenge and a solution I&apos;m proud of.
                     </p>
                 </motion.div>
 
@@ -341,11 +375,11 @@ export default function Projects() {
                             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">{selectedProject.title}</h2>
                             
                             <div className="mb-8">
-                                <h3 className="text-lg md:text-xl font-semibold mb-4 text-foreground/90 pb-2 border-b border-border/50">About the Project</h3>
-                                <ul className="space-y-3 text-muted-foreground">
+                                <h3 className="text-lg md:text-xl font-semibold mb-4 text-foreground/90 pb-2 border-b border-border/50">Key Contributions</h3>
+                                <ul className="space-y-3 text-muted-foreground -ml-5">
                                     {selectedProject.details.map((detail: string, i: number) => (
-                                        <li key={i} className="flex items-start text-base lg:text-lg leading-relaxed">
-                                            <span className="text-primary mr-3 mt-1.5 text-sm">▶</span>
+                                        <li key={i} className="relative pl-5 text-base lg:text-lg leading-relaxed">
+                                            <span className="absolute left-0 text-primary top-1.5 text-sm">▶</span>
                                             <span>{detail}</span>
                                         </li>
                                     ))}
@@ -355,7 +389,7 @@ export default function Projects() {
                             <div className="mt-8 pt-6 border-t border-border/50">
                                 <h3 className="text-lg md:text-xl font-semibold mb-4">Technologies Used</h3>
                                 <div className="flex flex-wrap gap-3">
-                                    {selectedProject.tags.map((tag: any) => (
+                                    {selectedProject.tags.map((tag) => (
                                         <span
                                             key={tag.name}
                                             className="px-4 py-2 text-sm md:text-base rounded-lg bg-secondary/50 text-secondary-foreground flex items-center gap-2 border border-border"

@@ -12,14 +12,15 @@ import {
     FaHtml5,
     FaCss3Alt,
     FaBootstrap,
-    FaJs
+    FaJs,
+    FaCreditCard
 } from "react-icons/fa";
 import {
     TbBrandNextjs,
     TbBrandTypescript,
 } from "react-icons/tb";
 import { DiMongodb, DiMysql, DiPostgresql, DiRedis } from "react-icons/di";
-import { SiExpress, SiRedux, SiJest, SiSocketdotio, SiNginx } from "react-icons/si";
+import { SiExpress, SiRedux, SiJest, SiSocketdotio, SiNginx, SiSonarqube, SiTailwindcss, SiGithubactions } from "react-icons/si";
 
 const skills = [
     { name: "JavaScript", icon: <FaJs /> },
@@ -42,6 +43,10 @@ const skills = [
     { name: "Git", icon: <FaGitAlt /> },
     { name: "Jest", icon: <SiJest /> },
     { name: "Socket.IO", icon: <SiSocketdotio /> },
+    { name: "SonarQube", icon: <SiSonarqube /> },
+    { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+    { name: "CI/CD", icon: <SiGithubactions /> },
+    { name: "Payment Gateways", icon: <FaCreditCard /> },
 ];
 
 export default function About() {
@@ -63,7 +68,6 @@ export default function About() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // enable parallax effect for decorated elements
     useParallax();
 
     return (
@@ -78,7 +82,7 @@ export default function About() {
                 >
                     <h2 className="text-3xl font-bold mb-6 sm:text-4xl lg:text-5xl">About Me</h2>
                     <p className="text-lg text-muted-foreground leading-relaxed lg:text-xl">
-                        I'm a versatile Full-Stack Developer with a passion for building robust and scalable web applications. My expertise spans across the entire development lifecycle, from crafting beautiful and responsive user interfaces with modern frontend frameworks to designing and implementing resilient backend systems and managing cloud infrastructure.
+                        I&apos;m a versatile Full-Stack Developer with a passion for building robust and scalable web applications. My expertise spans across the entire development lifecycle, from crafting beautiful and responsive user interfaces with modern frontend frameworks to designing and implementing resilient backend systems and managing cloud infrastructure.
                     </p>
                 </motion.div>
 
@@ -96,7 +100,7 @@ export default function About() {
                                 My journey in software development has been a deep dive into both frontend and backend technologies. I thrive on building complete, end-to-end solutions that are not only performant and scalable but also provide a seamless user experience.
                             </p>
                             <p className="text-muted-foreground lg:text-lg">
-                                Whether it's architecting a database, building a RESTful API, or creating a pixel-perfect UI, I am driven by the challenge of solving complex problems and delivering high-quality software.
+                                Whether it&apos;s architecting a database, building a RESTful API, or creating a pixel-perfect UI, I am driven by the challenge of solving complex problems and delivering high-quality software.
                             </p>
                         </div>
                     </motion.div>

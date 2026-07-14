@@ -11,7 +11,6 @@ export default function CustomCursor() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        // Check if device has coarse pointer (touch)
         const checkMobile = () => {
             const isTouch = window.matchMedia("(pointer: coarse)").matches;
             setIsMobile(isTouch);

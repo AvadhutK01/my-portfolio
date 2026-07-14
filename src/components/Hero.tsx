@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function Hero() {
-    // Particle effect using canvas
     const canvasRef = useRef<HTMLCanvasElement>(null);
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -16,7 +15,7 @@ export default function Hero() {
 
         let animationFrameId: number;
         let particles: { x: number, y: number, r: number, dx: number, dy: number }[] = [];
-        let mouse = { x: -1000, y: -1000 };
+        const mouse = { x: -1000, y: -1000 };
 
         const handleMouseMove = (event: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
@@ -37,7 +36,7 @@ export default function Hero() {
 
         const initParticles = () => {
             particles = [];
-            const particleCount = Math.floor((canvas.width * canvas.height) / 15000); // Responsive count
+            const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
 
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
@@ -59,8 +58,7 @@ export default function Hero() {
             if (!ctx || !canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let p of particles) {
-                // Mouse Interaction
+            for (const p of particles) {
                 const dx = mouse.x - p.x;
                 const dy = mouse.y - p.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
@@ -136,7 +134,7 @@ export default function Hero() {
                     </span>
                 </h1>
                 <p className="mb-10 text-lg text-muted-foreground sm:text-xl max-w-2xl mx-auto">
-                    I'm Avadhut, a Full-Stack Developer & Cloud Enthusiast passionate about crafting intuitive and visually stunning web applications.
+                    I&apos;m Avadhut, a Full-Stack Developer & Cloud Enthusiast passionate about crafting intuitive and visually stunning web applications.
                 </p>
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
                     <Link

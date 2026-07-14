@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/nodemailer": "^8.0.0",
+    "axios": "^1.18.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.555.0",
